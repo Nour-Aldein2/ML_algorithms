@@ -1,111 +1,154 @@
 #=
-KMeans_docs:
+kmeans_docs:
 - Julia version: 
 - Author: nour
 - Date: 2023-06-05
 =#
-"""
-KMeans: A structure to represent the KMeans object
 
-Fields:
-k - number of clusters
-data - 2D array with data points as rows and features as columns
-seed - seed for Julia's random number generator
-centroids - 2D array representing the centroids of the clusters. Initialized to zeros
-labels - 1D array of the label (cluster) for each data point. Initialized to zeros
-"""
-KMeans
+macro KMeans_docs()
+    return quote
+    """
+    KMeans(k::Int, data::Array{Float64,2}, seed::Int=rand(1:typemax(Int)))
 
-"""
-instantiate_centroids!(km::KMeans)
+    Construct a KMeans struct with the provided number of clusters, data, and seed. The centroids 
+    and labels are initialized to empty arrays of appropriate dimensions.
 
-Instantiate the centroids at random data points.
+    # Arguments
+    - `k::Int`: The number of clusters.
+    - `data::Array{Float64,2}`: The data to be clustered.
+    - `seed::Int`: The seed for random number generation (optional).
+    """
+    end
+end
 
-km: KMeans object
+macro instantiate_centroids_docs()
+    return quote
+    """
+    instantiate_centroids!(km::KMeans)
 
-Returns: 2D array representing the centroids of the clusters
-"""
-instantiate_centroids!
+    Initialize the centroids of the KMeans object by randomly picking data points.
 
-"""
-calculate_euclidean_distance(point::Array{Float64,1}, centroid::Array{Float64,1})
+    # Arguments
+    - `km::KMeans`: A KMeans object.
+    """
+    end
+end
 
-Calculate the Euclidean distance between a data point and a centroid.
+macro calculate_euclidean_distance_docs()
+    return quote
+    """
+    calculate_euclidean_distance(point::Array{Float64,1}, centroid::Array{Float64,1})
 
-point - 1D array representing a data point
-centroid - 1D array representing a centroid
+    Calculates the Euclidean distance between a point and a centroid.
 
-Returns: The Euclidean distance between the point and the centroid
-"""
-calculate_euclidean_distance
+    # Arguments
+    - `point::Array{Float64,1}`: A data point.
+    - `centroid::Array{Float64,1}`: A centroid.
+    """
+    end
+end
 
-"""
-update_labels!(km::KMeans)
+macro update_labels_docs()
+    return quote
+    """
+    update_labels!(km::KMeans)
 
-Update the label (cluster) for each data point based on the closest centroid.
+    Assign each data point to the closest centroid and update the labels of the KMeans object.
 
-km: KMeans object
+    # Arguments
+    - `km::KMeans`: A KMeans object.
+    """
+    end
+end
 
-Returns: The number of data points whose label (cluster) was changed in this step
-"""
-update_labels!
+macro update_centroids_docs()
+    return quote
+    """
+    update_centroids!(km::KMeans)
 
-"""
-update_centroids!(km::KMeans)
+    Update the centroids of the KMeans object based on the mean of the data points in each cluster.
 
-Update the centroids based on the mean of the data points in each cluster.
+    # Arguments
+    - `km::KMeans`: A KMeans object.
+    """
+    end
+end
 
-km: KMeans object
-"""
-update_centroids!
+macro apply_kmeans_docs()
+    return quote
+    """
+    apply_kmeans!(km::KMeans)
 
-"""
-apply_kmeans!(km::KMeans)
+    Apply the K-Means algorithm to the KMeans object until convergence.
 
-Apply the K-means algorithm until convergence (no changes in labels).
+    # Arguments
+    - `km::KMeans`: A KMeans object.
+    """
+    end
+end
 
-km: KMeans object
+macro print_centroids_docs()
+    return quote
+    """
+    print_centroids(km::KMeans)
 
-Returns: The number of iterations required for convergence
-"""
-apply_kmeans!
+    Print the centroids of the KMeans object.
 
-"""
-print_centroids(km::KMeans)
+    # Arguments
+    - `km::KMeans`: A KMeans object.
+    """
+    end
+end
 
-Print the coordinates of the centroids.
+macro plot_data_docs()
+    return quote
+    """
+    plot_data(km::KMeans)
 
-km: KMeans object
-"""
-print_centroids
+    Plot the data points and centroids of the KMeans object.
 
-"""
-plot_data(km::KMeans)
+    # Arguments
+    - `km::KMeans`: A KMeans object.
+    """
+    end
+end
 
-Plot the data points, color-coded by cluster, with the centroids marked with red crosses.
+macro calculate_distortion_docs()
+    return quote
+    """
+    calculate_distortion(data::Array{Float64,2}, k_value::Int)
 
-km: KMeans object
-"""
-plot_data
+    Calculate the distortion (sum of squared distances from each point to its centroid) 
+    for a range of number of clusters.
 
-"""
-calculate_distortion(data::Array{Float64,2}, k_value::Int)
+    # Arguments
+    - `data::Array{Float64,2}`: The data to be clustered.
+    - `k_value::Int`: The maximum number of clusters to consider.
+    """
+    end
+end
 
-Calculate the distortion (sum of squared distances from each data point to its centroid) for a range of k values.
+macro plot_distortion_docs()
+    return quote
+    """
+    plot_distortion(k_value::Int, distortions::Vector{Float64})
 
-data - 2D array with data points as rows and features as columns
-k_value - The maximum number of clusters for which to calculate the distortion
+    Plot the distortions for a range of number of clusters.
 
-Returns: A list of distortions for k from 1 to k_value
-"""
-calculate_distortion
+    # Arguments
+    - `k_value::Int`: The maximum number of clusters considered.
+    - `distortions::Vector{Float64}`: The calculated distortions for each number of clusters.
+    """
+    end
+end
 
-"""
-plot_distortion(k_value::Int, distortions::Vector{Float64})
+macro main_docs()
+    return quote
+    """
+    main()
 
-Plot the distortions for a range of k values.
-
-k_value - The maximum number of clusters for which the distortion was calculated
-distortions - A list of distortions for k from 1 to k_value
-"""
-plot_distortion
+    The main function that performs K-Means clustering on the provided data, 
+    and prints and plots the results.
+    """
+    end
+end
